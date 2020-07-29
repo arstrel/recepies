@@ -1,0 +1,39 @@
+{
+  "name": "recepies",
+  "version": "1.0.0",
+  "description": "Project to get back to vanilla JavaScript and learn some Babel, Webpack and most importantly code structure. Practice Model-View-Controller pattern CSS grid, Flex and other modern CSS techniques.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --mode development --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arstrel/recepies.git"
+  },
+  "keywords": [],
+  "author": "Artemio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arstrel/recepies/issues"
+  },
+  "homepage": "https://github.com/arstrel/recepies#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "html-webpack-plugin": "^4.3.0",
+    "webpack": "^4.44.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "core-js": "^3.6.5",
+    "regenerator-runtime": "^0.13.7"
+  }
+}
