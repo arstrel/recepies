@@ -96,3 +96,15 @@ export const clearSearchResults = () => {
   elements.searchResultList.innerHTML = '';
   elements.searchPages.innerHTML = '';
 };
+
+export const highlightSelected = (id) => {
+  const element = document.querySelector(`a[href="#${id}"]`);
+  const resultsList = document.querySelectorAll('.results__link');
+  resultsList.forEach((el) => {
+    el.classList.remove('results__link--active');
+  });
+
+  if (element) {
+    element.classList.add('results__link--active');
+  }
+};

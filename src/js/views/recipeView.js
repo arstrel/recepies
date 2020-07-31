@@ -1,11 +1,33 @@
+import { Fraction } from 'fractional';
 import { elements } from './base';
+
+const formatCount = (count) => {
+  if (count) {
+    const [int, dec] = count
+      .toString()
+      .split('.')
+      .map((el) => Number(el));
+    if (!dec) {
+      return count;
+    }
+    if (int === 0) {
+      // Ex. 0.5 --> 1/2
+      const fr = new Fraction(count);
+      return `${fr.numerator}/${fr.denominator}`;
+    }
+    // Ex. 2.5 --> 5/2 --> 2 1/2
+    const fr = new Fraction(count - int);
+    return `${int} ${fr.numerator}/${fr.denominator}`;
+  }
+  return '?';
+};
 
 const createIngredient = (item) => `
   <li class="recipe__item">
     <svg class="recipe__icon">
         <use href="img/icons.svg#icon-check"></use>
     </svg>
-    <div class="recipe__count">${item.count}</div>
+    <div class="recipe__count">${formatCount(item.count)}</div>
     <div class="recipe__ingredient">
         <span class="recipe__unit">${item.unit}</span>
         ${item.ingredient}
@@ -41,12 +63,12 @@ export const renderRecipe = (recipe = {}) => {
       <span class="recipe__info-text"> servings</span>
 
       <div class="recipe__info-buttons">
-          <button class="btn-tiny">
+          <button id="btn-decrease" class="btn-tiny">
               <svg>
                   <use href="img/icons.svg#icon-circle-with-minus"></use>
               </svg>
           </button>
-          <button class="btn-tiny">
+          <button id="btn-increase" class="btn-tiny">
               <svg>
                   <use href="img/icons.svg#icon-circle-with-plus"></use>
               </svg>
@@ -96,4 +118,18 @@ export const renderRecipe = (recipe = {}) => {
 
 export const clearRecipe = () => {
   elements.recipe.innerHTML = '';
+};
+
+export const updateServingsIngredients = (recipe) => {
+  // Update the counts
+  // eslint-disable-next-line operator-linebreak
+  document.querySelector('.recipe__info-data--people').textContent =
+    recipe.servings;
+
+  // Update ingredients
+  const countElements = document.querySelectorAll('.recipe__count');
+  countElements.forEach((el, i) => {
+    // eslint-disable-next-line no-param-reassign
+    el.textContent = formatCount(recipe.ingredients[i].count);
+  });
 };

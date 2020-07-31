@@ -13,7 +13,7 @@ import * as recipeView from './views/recipeView';
  */
 const state = {};
 
-// Search Controller
+// SEARCH CONTROLLER
 const controlSearch = async (e) => {
   e.preventDefault();
   // 1) Get query from the view
@@ -54,7 +54,7 @@ elements.searchPages.addEventListener('click', (e) => {
   }
 });
 
-// Recipe controller
+// RECIPE CONTROLLER
 const controlRecipe = async () => {
   const { hash = '' } = window.location;
   const id = hash.substring(1);
@@ -62,6 +62,11 @@ const controlRecipe = async () => {
     // Prepare UI for changes
     recipeView.clearRecipe();
     renderSpinner(elements.recipe);
+
+    // Highlight selected search item
+    if (state.search) {
+      searchView.highlightSelected(id);
+    }
 
     // Create new recipe
     state.recipe = new Recipe(id);
@@ -87,4 +92,19 @@ const controlRecipe = async () => {
 
 ['hashchange', 'load'].forEach((event) => {
   window.addEventListener(event, controlRecipe);
+});
+
+// Handling recipe button clicks
+elements.recipe.addEventListener('click', (e) => {
+  if (e.target.matches('#btn-decrease, #btn-decrease *')) {
+    // Decrease button clicked
+    if (state.recipe.servings > 1) {
+      state.recipe.updateServings('dec');
+    }
+  }
+  if (e.target.matches('#btn-increase, #btn-increase *')) {
+    // Increase button clicked
+    state.recipe.updateServings('inc');
+  }
+  recipeView.updateServingsIngredients(state.recipe);
 });

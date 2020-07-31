@@ -103,9 +103,15 @@ export default class Recipe {
         // Ex. 4 cups, arrCount = [4]
         const arrCount = arrIng.slice(0, unitIndex);
         let count;
+
         if (arrCount.length === 1) {
           // eslint-disable-next-line no-eval
           count = eval(arrIng[0].replace('+', '').replace('-', '+'));
+        } else if (arrCount.length === 3 && !Number(arrCount[1])) {
+          // Ex. ['2', 'to', '3']
+          arrCount.splice(1, 1);
+          // eslint-disable-next-line no-eval
+          count = eval(arrCount.join('+')) / 2;
         } else {
           // eslint-disable-next-line no-eval
           count = eval(arrIng.slice(0, unitIndex).join('+'));
@@ -135,5 +141,18 @@ export default class Recipe {
       return objIngredient;
     });
     this.ingredients = newIngredients;
+  }
+
+  updateServings(type) {
+    // Servings
+    const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+    // Ingredients
+    this.ingredients.forEach((ing) => {
+      // eslint-disable-next-line no-param-reassign
+      ing.count *= newServings / this.servings;
+    });
+
+    this.servings = newServings;
   }
 }
