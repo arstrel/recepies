@@ -15,7 +15,7 @@ export default class Search {
       this.result = res.data.recipes;
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(err);
+      console.log('Error fetching list of recipes ', err);
     }
   }
 }
