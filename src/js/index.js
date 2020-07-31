@@ -3,6 +3,7 @@ import Search from './models/Search';
 import Recipe from './models/Recipe';
 import { elements, renderSpinner, removeSpinner } from './views/base';
 import * as searchView from './views/searchView';
+import * as recipeView from './views/recipeView';
 
 /*
  * App global state
@@ -17,6 +18,7 @@ const controlSearch = async (e) => {
   e.preventDefault();
   // 1) Get query from the view
   const query = searchView.getInput();
+
   if (query) {
     // 2) New search object and add to state
     state.search = new Search(query);
@@ -42,6 +44,7 @@ const controlSearch = async (e) => {
 };
 
 elements.searchForm.addEventListener('submit', controlSearch);
+
 elements.searchPages.addEventListener('click', (e) => {
   const btn = e.target.closest('.btn-inline');
   if (btn) {
@@ -57,6 +60,8 @@ const controlRecipe = async () => {
   const id = hash.substring(1);
   if (id) {
     // Prepare UI for changes
+    recipeView.clearRecipe();
+    renderSpinner(elements.recipe);
 
     // Create new recipe
     state.recipe = new Recipe(id);
@@ -65,12 +70,14 @@ const controlRecipe = async () => {
       // Get recipe data
       await state.recipe.getRecipe();
 
-      // Calc time and servings
+      // Calc time and servings and parse ingredients
       state.recipe.calcTime();
       state.recipe.calcServings();
+      state.recipe.parseIngredients();
 
       // Render the recipe
-      console.log(state.recipe);
+      removeSpinner();
+      recipeView.renderRecipe(state.recipe);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('Error in Recipe Control ', err);
