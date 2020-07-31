@@ -2093,7 +2093,7 @@ eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn th
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"proxy\", function() { return proxy; });\n// eslint-disable-next-line import/prefer-default-export\nvar proxy = 'https://thingproxy.freeboard.io/fetch/'; // export const proxy = 'https://cors-anywhere.herokuapp.com/';\n\n//# sourceURL=webpack:///./src/js/config.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"proxy\", function() { return proxy; });\n// eslint-disable-next-line import/prefer-default-export\nvar proxy = 'https://cors-anywhere.herokuapp.com/'; // export const proxy = 'https://thingproxy.freeboard.io/fetch/';\n\n//# sourceURL=webpack:///./src/js/config.js?");
 
 /***/ }),
 
