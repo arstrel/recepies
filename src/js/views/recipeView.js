@@ -3,20 +3,21 @@ import { elements } from './base';
 
 const formatCount = (count) => {
   if (count) {
-    const [int, dec] = count
+    const newCount = Math.round(count * 1000) / 1000;
+    const [int, dec] = newCount
       .toString()
       .split('.')
       .map((el) => Number(el));
     if (!dec) {
-      return count;
+      return newCount;
     }
     if (int === 0) {
       // Ex. 0.5 --> 1/2
-      const fr = new Fraction(count);
+      const fr = new Fraction(newCount);
       return `${fr.numerator}/${fr.denominator}`;
     }
     // Ex. 2.5 --> 5/2 --> 2 1/2
-    const fr = new Fraction(count - int);
+    const fr = new Fraction(newCount - int);
     return `${int} ${fr.numerator}/${fr.denominator}`;
   }
   return '?';
